@@ -1,3 +1,4 @@
 identityApi : 5001
 catalogApi : 5011
 photoStockApi : 5012
+basketAPI : 5013

@@ -1,5 +1,5 @@
 ﻿using CatalogAPI.Dtos;
-using FreeCourse.Shared.Dtos;
+using Shared.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

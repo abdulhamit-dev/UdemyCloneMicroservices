@@ -1,5 +1,5 @@
-﻿using FreeCourse.Shared.ControllerBases;
-using FreeCourse.Shared.Dtos;
+﻿using Shared.ControllerBases;
+using Shared.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoStockAPI.Dto;

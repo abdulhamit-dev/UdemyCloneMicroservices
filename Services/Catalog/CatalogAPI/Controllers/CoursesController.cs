@@ -1,6 +1,6 @@
 ﻿using CatalogAPI.Dtos;
 using CatalogAPI.Services;
-using FreeCourse.Shared.ControllerBases;
+using Shared.ControllerBases;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

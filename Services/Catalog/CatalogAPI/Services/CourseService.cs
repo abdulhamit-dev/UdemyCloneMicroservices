@@ -2,8 +2,8 @@
 using CatalogAPI.Dtos;
 using CatalogAPI.Models;
 using CatalogAPI.Settings;
-using FreeCourse.Shared.Dtos;
 using MongoDB.Driver;
+using Shared.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
