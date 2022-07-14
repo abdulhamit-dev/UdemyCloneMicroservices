@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{259B3EAA-56C0-448F-8A68-B69796787844}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\FreeCourse.Shared\Shared.csproj", "{40BDDE38-A78B-40B3-BE16-37E7C8427691}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared\Shared.csproj", "{40BDDE38-A78B-40B3-BE16-37E7C8427691}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{311CF1C8-2513-459C-9301-8BC3BEAED721}"
 EndProject

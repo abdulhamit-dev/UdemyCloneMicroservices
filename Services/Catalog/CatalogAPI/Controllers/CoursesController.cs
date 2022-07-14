@@ -1,8 +1,8 @@
 ﻿using CatalogAPI.Dtos;
 using CatalogAPI.Services;
-using Shared.ControllerBases;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shared.ControllerBases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
