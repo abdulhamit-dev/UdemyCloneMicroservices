@@ -48,14 +48,14 @@ namespace CatalogAPI
             //};
 
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            //{
-            //    options.RequireHttpsMetadata = false;
-            //    options.TokenValidationParameters = tokenValidationParameters;
-            //});
+
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
+
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add(new AuthorizeFilter());
+            });
 
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICourseService, CourseService>();
@@ -71,6 +71,12 @@ namespace CatalogAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatalogAPI", Version = "v1" });
             });
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["IdentityServerUrl"];
+                options.Audience = "resource_catalog";
+                options.RequireHttpsMetadata = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +92,7 @@ namespace CatalogAPI
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
