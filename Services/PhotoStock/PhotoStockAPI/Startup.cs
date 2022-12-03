@@ -24,25 +24,33 @@ namespace PhotoStockAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var tokenOptions = Configuration.GetSection("TokenOptions");
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions["SecurityKey"]));
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = true,
-                ValidIssuer = tokenOptions["Iss"],
-                ValidateAudience = true,
-                ValidAudience = tokenOptions["Aud"],
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                RequireExpirationTime = true,
-            };
+            //var tokenOptions = Configuration.GetSection("TokenOptions");
+            //var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions["SecurityKey"]));
+            //var tokenValidationParameters = new TokenValidationParameters
+            //{
+            //    ValidateIssuerSigningKey = true,
+            //    IssuerSigningKey = signingKey,
+            //    ValidateIssuer = true,
+            //    ValidIssuer = tokenOptions["Iss"],
+            //    ValidateAudience = true,
+            //    ValidAudience = tokenOptions["Aud"],
+            //    ValidateLifetime = true,
+            //    ClockSkew = TimeSpan.Zero,
+            //    RequireExpirationTime = true,
+            //};
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            //{
+            //    options.RequireHttpsMetadata = false;
+            //    options.TokenValidationParameters = tokenValidationParameters;
+            //});
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
+                options.Authority = Configuration["IdentityServerUrl"];
+                options.Audience = "resource_photo_stock";
                 options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = tokenValidationParameters;
             });
 
             services.AddControllers(opt =>
