@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Shared.Dtos;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,6 +41,20 @@ namespace IdentityServer.Controllers
 
             //return Ok(Response<NoContent>.Success(204));
             return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUser()
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
+            if (userId == null)
+                return BadRequest();
+
+            var user = await _userManager.FindByIdAsync(userId.Value);
+
+            if(user==null) return BadRequest();
+
+            return Ok(user);
         }
     }
 }
