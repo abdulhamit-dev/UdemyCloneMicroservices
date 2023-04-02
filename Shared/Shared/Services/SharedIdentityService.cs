@@ -16,6 +16,6 @@ namespace Shared.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetUserId => _httpContextAccessor.HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        public string GetUserId => _httpContextAccessor.HttpContext.User.FindFirst("sub").Value;
     }
 }
