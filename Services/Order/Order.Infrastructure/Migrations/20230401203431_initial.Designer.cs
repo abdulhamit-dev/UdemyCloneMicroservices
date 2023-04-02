@@ -10,8 +10,8 @@ using Order.Infrastructure;
 namespace Order.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    [Migration("20220724125714_initial2")]
-    partial class initial2
+    [Migration("20230401203431_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

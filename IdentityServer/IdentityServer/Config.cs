@@ -17,6 +17,7 @@ namespace IdentityServer
              new ApiResource("resource_photo_stock"){Scopes={"photo_stock_fullpermission"}},
              new ApiResource("resource_basket"){Scopes={"basket_fullpermission"}},
              new ApiResource("resource_discount"){Scopes={"discount_fullpermission"}},
+             new ApiResource("resource_order"){Scopes={"order_fullpermission"}},
              new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -35,6 +36,7 @@ namespace IdentityServer
              new ApiScope("photo_stock_fullpermission","Photo Stock API full"),
              new ApiScope("basket_fullpermission","Basket API full"),
              new ApiScope("discount_fullpermission","Discount API full"),
+             new ApiScope("order_fullpermission","Order API full"),
              new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -59,6 +61,7 @@ namespace IdentityServer
                     AllowedScopes={
                         "basket_fullpermission",
                         "discount_fullpermission",
+                        "order_fullpermission",
                         IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,

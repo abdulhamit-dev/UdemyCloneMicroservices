@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ using Order.Infrastructure;
 using Shared.Services;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,26 +36,35 @@ namespace OrderAPI
         
         public void ConfigureServices(IServiceCollection services)
         {
-            var tokenOptions = Configuration.GetSection("TokenOptions");
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions["SecurityKey"]));
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = true,
-                ValidIssuer = tokenOptions["Iss"],
-                ValidateAudience = true,
-                ValidAudience = tokenOptions["Aud"],
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                RequireExpirationTime = true,
-            };
+            //var tokenOptions = Configuration.GetSection("TokenOptions");
+            //var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions["SecurityKey"]));
+            //var tokenValidationParameters = new TokenValidationParameters
+            //{
+            //    ValidateIssuerSigningKey = true,
+            //    IssuerSigningKey = signingKey,
+            //    ValidateIssuer = true,
+            //    ValidIssuer = tokenOptions["Iss"],
+            //    ValidateAudience = true,
+            //    ValidAudience = tokenOptions["Aud"],
+            //    ValidateLifetime = true,
+            //    ClockSkew = TimeSpan.Zero,
+            //    RequireExpirationTime = true,
+            //};
 
 
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            //{
+            //    options.RequireHttpsMetadata = false;
+            //    options.TokenValidationParameters = tokenValidationParameters;
+            //});
+
+            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
+                options.Authority = Configuration["IdentityServerUrl"];
+                options.Audience = "resource_order";
                 options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = tokenValidationParameters;
             });
 
             services.AddDbContext<OrderDbContext>(opt =>
@@ -69,7 +80,7 @@ namespace OrderAPI
             services.AddMediatR(typeof(CreateOrderCommandHandler).Assembly);
             services.AddControllers(opt =>
             {
-                opt.Filters.Add(new AuthorizeFilter());
+                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
             });
             services.AddSwaggerGen(c =>
             {
