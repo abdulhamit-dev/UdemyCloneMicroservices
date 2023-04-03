@@ -58,6 +58,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityServer\IdentityServer\IdentityServer.csproj", "{5D146D4E-8A7C-4F00-A3AD-4495AA28A93A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontends", "Frontends", "{892C5102-E322-4033-8E9D-9CE741966939}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyClone.UI", "Frontends\UdemyClone.UI\UdemyClone.UI.csproj", "{FE48A57B-198D-4D38-BA59-8C03642CE338}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +124,10 @@ Global
 		{5D146D4E-8A7C-4F00-A3AD-4495AA28A93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D146D4E-8A7C-4F00-A3AD-4495AA28A93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D146D4E-8A7C-4F00-A3AD-4495AA28A93A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE48A57B-198D-4D38-BA59-8C03642CE338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE48A57B-198D-4D38-BA59-8C03642CE338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE48A57B-198D-4D38-BA59-8C03642CE338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE48A57B-198D-4D38-BA59-8C03642CE338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +154,7 @@ Global
 		{1707AD26-2017-4A4E-ACDD-92771D46936B} = {B8EE1B74-358D-4B34-B951-1E4AEAA95D62}
 		{D3D9D1E1-2CDC-4066-94FA-496CF4900286} = {310D9FF9-3D24-49DB-AC28-6E2F7E416B89}
 		{5D146D4E-8A7C-4F00-A3AD-4495AA28A93A} = {FC89BC27-358F-474A-B555-8D0B015C3C4E}
+		{FE48A57B-198D-4D38-BA59-8C03642CE338} = {892C5102-E322-4033-8E9D-9CE741966939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3958BAEC-69DB-46FB-81B9-BCED6048382C}

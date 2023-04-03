@@ -1,7 +1,12 @@
+gateway        : 5000
+
 identityServer : 5001
+
 catalogApi     : 5011
 photoStockApi  : 5012
 basketAPI      : 5013
 discountAPI    : 5014
 orderAPI       : 5015
-fakePayment    : 5016
+fakePaymentAPI : 5016
+
+web			   : 5010
