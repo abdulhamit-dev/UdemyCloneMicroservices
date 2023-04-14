@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.JsonWebTokens;
-using Shared.Dtos;
 using System.Linq;
 using System.Threading.Tasks;
 using static IdentityServer4.IdentityServerConstants;
@@ -36,7 +35,7 @@ namespace IdentityServer.Controllers
             var result = await _userManager.CreateAsync(user, signupDto.Password);
             if (!result.Succeeded)
             {
-                return BadRequest( Response<NoContent>.Fail(result.Errors.Select(x => x.Description).ToList(), 400));
+                return BadRequest( );
             }
 
             //return Ok(Response<NoContent>.Success(204));
