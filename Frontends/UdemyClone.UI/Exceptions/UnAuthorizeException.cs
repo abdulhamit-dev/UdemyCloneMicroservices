@@ -1,3 +1,4 @@
+using System;
 namespace UdemyClone.UI.Exceptions;
 
 public class UnAuthorizeException : Exception
