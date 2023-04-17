@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\Catalog\CatalogAPI\CatalogAPI.csproj" />
     <ProjectReference Include="..\..\Shared\Shared\Shared.csproj" />
   </ItemGroup>
 
