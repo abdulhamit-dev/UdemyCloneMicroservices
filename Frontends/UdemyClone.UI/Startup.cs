@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shared.Services;
 using UdemyClone.UI.Handler;
 using UdemyClone.UI.Models;
 using UdemyClone.UI.Services;
@@ -30,9 +31,14 @@ namespace UdemyClone.UI
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             services.AddHttpContextAccessor();
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+            services.AddHttpClient<ICatalogService, CatalogService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
+            });
             services.AddHttpClient<IIdentityService, IdentityService>();
 
             services.AddHttpClient<IUserService, UserService>(opt =>

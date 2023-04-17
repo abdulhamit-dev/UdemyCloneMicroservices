@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using CatalogAPI.Dtos;
 using CatalogAPI.Services;
@@ -12,10 +14,23 @@ namespace UdemyClone.UI.Services;
 
 public class CatalogService:ICatalogService
 {
-    
-    public Task<List<CourseVM>> GetAllCourseAsync()
+    private readonly HttpClient _httpClient;
+
+    public CatalogService(HttpClient httpClient)
     {
-        throw new System.NotImplementedException();
+        _httpClient = httpClient;
+    }
+
+    public async Task<List<CourseVM>> GetAllCourseAsync()
+    {
+        var response = await _httpClient.GetAsync("courses");
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var responseSuccess= await response.Content.ReadFromJsonAsync<Response<List<CourseVM>>>();
+        return responseSuccess.Data;
     }
 
     public Task<List<CategoryVM>> GetAllCategoryAsync()
@@ -23,28 +38,53 @@ public class CatalogService:ICatalogService
         throw new System.NotImplementedException();
     }
 
-    public Task<List<CourseVM>> GetAllCourseByUserIdAsycn()
+    public async Task<List<CourseVM>> GetAllCourseByUserIdAsycn(string userId)
     {
-        throw new System.NotImplementedException();
+        var response = await _httpClient.GetAsync($"courses/GetAllByUserId/{userId}");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+        var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseVM>>>();
+        return responseSuccess.Data;
     }
 
-    public Task<CourseVM> GetByCourseId(string courseId)
+    public async Task<CourseVM> GetByCourseId(string courseId)
     {
-        throw new System.NotImplementedException();
+        var response = await _httpClient.GetAsync($"courses/{courseId}");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var responseSuccess = await response.Content.ReadFromJsonAsync<Response<CourseVM>>();
+
+
+        return responseSuccess.Data;
     }
 
-    public Task<bool> CreateCourseAsync(CourseCreateDto courseCreateDto)
+    public async Task<bool> CreateCourseAsync(CourseCreateDto courseCreateDto)
     {
-        throw new System.NotImplementedException();
+        var response = await _httpClient.PostAsJsonAsync("courses",courseCreateDto);
+
+   
+        return response.IsSuccessStatusCode;
     }
 
-    public Task<bool> UpdateCourseAsync(CourceUpdateDto courceUpdateDto)
+    public async Task<bool> UpdateCourseAsync(CourceUpdateDto courceUpdateDto)
     {
-        throw new System.NotImplementedException();
+        var response = await _httpClient.PutAsJsonAsync("courses",courceUpdateDto);
+
+   
+        return response.IsSuccessStatusCode;
     }
 
-    public Task<bool> DeleteCourseAsync(string courseId)
+    public async Task<bool> DeleteCourseAsync(string courseId)
     {
-        throw new System.NotImplementedException();
+        var response = await _httpClient.DeleteAsync($"courses/{courseId}");
+   
+        return response.IsSuccessStatusCode;
     }
 }
