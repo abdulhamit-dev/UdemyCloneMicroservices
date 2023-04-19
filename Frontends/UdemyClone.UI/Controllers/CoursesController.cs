@@ -21,7 +21,14 @@ public class CoursesController : Controller
     // GET
     public async Task<IActionResult> Index()
     {
-        
-        return View(await _catalogService.GetAllCourseByUserIdAsycn(_sharedIdentityService.GetUserId));
+        var models = await _catalogService.GetAllCourseByUserIdAsycn(_sharedIdentityService.GetUserId);
+        return View(models);
+    }
+
+
+    public IActionResult IndexIki()
+    {
+
+        return View();
     }
 }

@@ -52,10 +52,11 @@ namespace CatalogAPI
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers(opt =>
-            {
-                opt.Filters.Add(new AuthorizeFilter());
-            });
+            services.AddControllers();
+            //services.AddControllers(opt =>
+            //{
+            //    opt.Filters.Add(new AuthorizeFilter());
+            //});
 
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICourseService, CourseService>();
