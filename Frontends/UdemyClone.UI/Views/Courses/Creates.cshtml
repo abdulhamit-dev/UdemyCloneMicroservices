@@ -9,7 +9,8 @@
             <div class="card-body">
                 <h5 class="card-title">Kurs ekleme </h5>
 
-                <form asp-controller="Courses" asp-action="Create" method="post" enctype="multipart/form-data">
+                
+                <form asp-action="create" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
 
                     <div class="mb-3">
@@ -45,12 +46,12 @@
                         <span class="text-danger" asp-validation-for="Feature.Duration"></span>
                     </div>
 
-                    @* <div class="mb-3"> *@
-                    @* *@
-                    @*     <label class="form-label" asp-for="PhotoFormFile"></label> *@
-                    @* *@
-                    @*     <input type="file" asp-for="PhotoFormFile" class="form-control" /> *@
-                    @* </div> *@
+                     @*<div class="mb-3"> 
+                     
+                         <label class="form-label" asp-for="PhotoFormFile"></label> 
+                     
+                         <input type="file" asp-for="PhotoFormFile" class="form-control" /> 
+                     </div>*@ 
 
                     <button type="submit" class="btn btn-primary">Kurs Kaydet</button>
                 </form>
