@@ -1,6 +1,6 @@
 namespace UdemyClone.UI.Models.Catalog;
 
-public class CourceUpdateDto
+public class CourseUpdateDto
 {
     public string Id { get; set; }
 

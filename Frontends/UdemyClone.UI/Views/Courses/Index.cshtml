@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Kurslar</h5>
-                
+                <a asp-controller="Courses" asp-action="Creates" class="btn btn-primary mb-3">Kurs oluştur</a>
                 @if (Model.Any())
                 {
                     <table class="table table-striped table-bordered">
@@ -21,7 +21,7 @@
                                 <th>Süre</th>
                                 <th>Kategori</th>
                                 <th>İşlemler</th>
-                            </tr>
+                               </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
@@ -31,7 +31,12 @@
                                     <td>@item.Name</td>
                                     <td>@item.Price</td>
                                     <td>@item.Feature.Duration</td>
-                                    <td>@item.Category.Name</td>                                  
+                                    <td>@item.Category.Name</td>
+                                    <td>
+                                        <a asp-controller="Courses" asp-action="Updates" asp-route-id="@item.Id" class="btn btn-success btn-sm">Güncelle</a>
+
+                                        <a asp-controller="Courses" asp-action="Deletes" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Sil</a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

@@ -82,7 +82,7 @@ public class CatalogService:ICatalogService
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> UpdateCourseAsync(CourceUpdateDto courceUpdateDto)
+    public async Task<bool> UpdateCourseAsync(Models.Catalog.CourseUpdateDto courceUpdateDto)
     {
         var response = await _httpClient.PutAsJsonAsync("courses",courceUpdateDto);
 

@@ -8,7 +8,7 @@ using UdemyClone.UI.Services.Interfaces;
 
 namespace UdemyClone.UI.Controllers;
 
-[Authorize]
+//[Authorize]
 public class CoursesController : Controller
 {
     private readonly ICatalogService _catalogService;
@@ -27,7 +27,7 @@ public class CoursesController : Controller
         return View(models);
     }
     
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Creates()
     {
         var categories = await _catalogService.GetAllCategoryAsync();
 
@@ -37,7 +37,7 @@ public class CoursesController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CourseCreateDto courseCreateDto)
+    public async Task<IActionResult> Creates(CourseCreateDto courseCreateDto)
     {
         var categories = await _catalogService.GetAllCategoryAsync();
         ViewBag.categoryList = new SelectList(categories, "Id", "Name");
@@ -48,6 +48,51 @@ public class CoursesController : Controller
         courseCreateDto.UserId = _sharedIdentityService.GetUserId;
 
         await _catalogService.CreateCourseAsync(courseCreateDto);
+
+        return RedirectToAction(nameof(Index));
+    }
+    public async Task<IActionResult> Updates(string id)
+    {
+        var course = await _catalogService.GetByCourseId(id);
+        var categories = await _catalogService.GetAllCategoryAsync();
+
+        if (course == null)
+        {
+             RedirectToAction(nameof(Index));
+        }
+        ViewBag.categoryList = new SelectList(categories, "Id", "Name", course.Id);
+        CourseUpdateDto courseUpdateDto = new()
+        {
+            Id = course.Id,
+            Name = course.Name,
+            Description = course.Description,
+            Price = course.Price,
+            Feature = course.Feature,
+            CategoryId = course.CategoryId,
+            UserId = course.UserId,
+            Picture = course.Picture
+        };
+
+        return View(courseUpdateDto);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Updates(CourseUpdateDto courseUpdateDto)
+    {
+        var categories = await _catalogService.GetAllCategoryAsync();
+        ViewBag.categoryList = new SelectList(categories, "Id", "Name", courseUpdateDto.Id);
+        if (!ModelState.IsValid)
+        {
+            return View();
+        }
+        await _catalogService.UpdateCourseAsync(courseUpdateDto);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Deletes(string id)
+    {
+        await _catalogService.DeleteCourseAsync(id);
 
         return RedirectToAction(nameof(Index));
     }

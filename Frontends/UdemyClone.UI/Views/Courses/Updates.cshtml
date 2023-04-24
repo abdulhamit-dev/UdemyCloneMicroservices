@@ -1,22 +1,22 @@
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Update";
 }
-@model CourseCreateDto
+@model CourseUpdateDto
 <div class="row">
     <div class="col-md-8 offset-md-2">
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Kurs ekleme </h5>
+                <h5 class="card-title">Kurs güncelleme </h5>
 
-                
-                <form asp-action="creates" method="post" enctype="multipart/form-data">
+                <form asp-controller="Courses" asp-action="Update" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
-
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="UserId" />
+                    <input type="hidden" asp-for="Picture" />
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label" asp-for="CategoryId"></label>
                         <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categoryList">
-                            <option value="">kategori seçiniz</option>
                         </select>
 
                         <span class="text-danger" asp-validation-for="CategoryId"></span>
@@ -46,14 +46,14 @@
                         <span class="text-danger" asp-validation-for="Feature.Duration"></span>
                     </div>
 
-                     @*<div class="mb-3"> 
-                     
-                         <label class="form-label" asp-for="PhotoFormFile"></label> 
-                     
-                         <input type="file" asp-for="PhotoFormFile" class="form-control" /> 
-                     </div>*@ 
+                    @*<div class="mb-3">
 
-                    <button type="submit" class="btn btn-primary">Kurs Kaydet</button>
+                        <label class="form-label" asp-for="PhotoFormFile"></label>
+
+                        <input type="file" asp-for="PhotoFormFile" class="form-control" />
+                    </div>*@
+
+                    <button type="submit" class="btn btn-primary">Kurs Güncelle</button>
                 </form>
             </div>
         </div>
