@@ -33,9 +33,18 @@ public class CatalogService:ICatalogService
         return responseSuccess.Data;
     }
 
-    public Task<List<CategoryVM>> GetAllCategoryAsync()
+    public async Task<List<CategoryVM>> GetAllCategoryAsync()
     {
-        throw new System.NotImplementedException();
+        var response = await _httpClient.GetAsync("categories");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CategoryVM>>>();
+
+        return responseSuccess.Data;
     }
 
     public async Task<List<CourseVM>> GetAllCourseByUserIdAsycn(string userId)
