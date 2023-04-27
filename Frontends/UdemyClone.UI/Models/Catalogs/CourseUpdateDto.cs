@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace UdemyClone.UI.Models.Catalog;
 
 public class CourseUpdateDto
@@ -16,4 +18,5 @@ public class CourseUpdateDto
     public FeatureVM Feature { get; set; }
 
     public string CategoryId { get; set; }
+    public IFormFile PhotoFormFile { get; set; }
 }
