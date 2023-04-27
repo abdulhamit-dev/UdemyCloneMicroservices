@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UdemyClone.UI.Models;
-using UdemyClone.UI.Models.Catalog;
+using UdemyClone.UI.Models.Catalogs;
 
 namespace UdemyClone.UI.Services.Interfaces;
 

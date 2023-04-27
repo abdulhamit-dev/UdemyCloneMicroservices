@@ -1,4 +1,4 @@
-namespace UdemyClone.UI.Models.Catalog;
+namespace UdemyClone.UI.Models.Catalogs;
 
 public class FeatureVM
 {

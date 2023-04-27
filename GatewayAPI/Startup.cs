@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -22,26 +23,15 @@ namespace GatewayAPI
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            var tokenOptions = Configuration.GetSection("TokenOptions");
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions["SecurityKey"]));
-            var tokenValidationParameters = new TokenValidationParameters
+            var val= Configuration["IdentityServerURL"];
+            services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = true,
-                ValidIssuer = tokenOptions["Iss"],
-                ValidateAudience = true,
-                ValidAudience = tokenOptions["Aud"],
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                RequireExpirationTime = true,
-            };
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
+                options.Authority = Configuration["IdentityServerURL"];
+                options.Audience = "resource_gateway";
                 options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = tokenValidationParameters;
             });
+
+   
 
             services.AddOcelot();
         }
@@ -52,7 +42,7 @@ namespace GatewayAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseHttpLogging();
             await app.UseOcelot();
         }
     }

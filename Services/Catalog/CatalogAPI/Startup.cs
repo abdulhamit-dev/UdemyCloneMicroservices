@@ -1,6 +1,7 @@
 using CatalogAPI.Services;
 using CatalogAPI.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,31 +34,23 @@ namespace CatalogAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var tokenOptions = Configuration.GetSection("TokenOptions");
-            //var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions["SecurityKey"]));
-            //var tokenValidationParameters = new TokenValidationParameters
-            //{
-            //    ValidateIssuerSigningKey = true,
-            //    IssuerSigningKey = signingKey,
-            //    ValidateIssuer = true,
-            //    ValidIssuer = tokenOptions["Iss"],
-            //    ValidateAudience = true,
-            //    ValidAudience = tokenOptions["Aud"],
-            //    ValidateLifetime = true,
-            //    ClockSkew = TimeSpan.Zero,
-            //    RequireExpirationTime = true,
-            //};
 
 
-
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["IdentityServerUrl"];
+                options.Audience = "resource_catalog";
+                options.RequireHttpsMetadata = false;
+            });
 
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllers();
-            //services.AddControllers(opt =>
-            //{
-            //    opt.Filters.Add(new AuthorizeFilter());
-            //});
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add(new AuthorizeFilter());
+            });
 
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICourseService, CourseService>();
@@ -72,12 +66,7 @@ namespace CatalogAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatalogAPI", Version = "v1" });
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.Authority = Configuration["IdentityServerUrl"];
-                options.Audience = "resource_catalog";
-                options.RequireHttpsMetadata = false;
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -35,28 +35,6 @@ namespace BasketAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var tokenOptions = Configuration.GetSection("TokenOptions");
-            //var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions["SecurityKey"]));
-            //var tokenValidationParameters = new TokenValidationParameters
-            //{
-            //    ValidateIssuerSigningKey = true,
-            //    IssuerSigningKey = signingKey,
-            //    ValidateIssuer = true,
-            //    ValidIssuer = tokenOptions["Iss"],
-            //    ValidateAudience = true,
-            //    ValidAudience = tokenOptions["Aud"],
-            //    ValidateLifetime = true,
-            //    ClockSkew = TimeSpan.Zero,
-            //    RequireExpirationTime = true,
-            //};
-
-
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            //{
-            //    options.RequireHttpsMetadata = false;
-            //    options.TokenValidationParameters = tokenValidationParameters;
-            //});
-
             var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

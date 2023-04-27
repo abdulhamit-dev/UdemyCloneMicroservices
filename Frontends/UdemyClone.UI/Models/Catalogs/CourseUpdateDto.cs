@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace UdemyClone.UI.Models.Catalog;
+namespace UdemyClone.UI.Models.Catalogs;
 
 public class CourseUpdateDto
 {

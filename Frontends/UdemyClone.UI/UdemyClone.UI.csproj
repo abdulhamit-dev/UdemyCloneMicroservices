@@ -12,4 +12,10 @@
     <ProjectReference Include="..\..\Services\Catalog\CatalogAPI\CatalogAPI.csproj" />
     <ProjectReference Include="..\..\Shared\Shared\Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Models\PhotoStock\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\PhotoStocks\" />
+  </ItemGroup>
 </Project>

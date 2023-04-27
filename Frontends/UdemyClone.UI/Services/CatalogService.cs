@@ -2,23 +2,25 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using CatalogAPI.Dtos;
 using CatalogAPI.Services;
 using Shared.Dtos;
 using UdemyClone.UI.Models;
-using UdemyClone.UI.Models.Catalog;
+using UdemyClone.UI.Models.Catalogs;
 using UdemyClone.UI.Services.Interfaces;
-using CourseCreateDto = UdemyClone.UI.Models.Catalog.CourseCreateDto;
+using CourseCreateDto = UdemyClone.UI.Models.Catalogs.CourseCreateDto;
 
 namespace UdemyClone.UI.Services;
 
 public class CatalogService:ICatalogService
 {
     private readonly HttpClient _httpClient;
+    private readonly IPhotoStockService _photoStockService;
+    //private readonly PhotoHelper _photoHelper;
 
-    public CatalogService(HttpClient httpClient)
+    public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService)
     {
         _httpClient = httpClient;
+        _photoStockService = photoStockService;
     }
 
     public async Task<List<CourseVM>> GetAllCourseAsync()
@@ -76,14 +78,28 @@ public class CatalogService:ICatalogService
 
     public async Task<bool> CreateCourseAsync(CourseCreateDto courseCreateDto)
     {
+        var resultPhotoService = await _photoStockService.UploadPhoto(courseCreateDto.PhotoFormFile);
+        if (resultPhotoService != null)
+        {
+            courseCreateDto.Picture = resultPhotoService.Url;
+        }
+
         var response = await _httpClient.PostAsJsonAsync("courses",courseCreateDto);
 
    
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> UpdateCourseAsync(Models.Catalog.CourseUpdateDto courceUpdateDto)
+    public async Task<bool> UpdateCourseAsync(CourseUpdateDto courceUpdateDto)
     {
+        var resultPhotoService = await _photoStockService.UploadPhoto(courceUpdateDto.PhotoFormFile);
+
+        if (resultPhotoService != null)
+        {
+            await _photoStockService.DeletePhoto(courceUpdateDto.Picture);
+            courceUpdateDto.Picture = resultPhotoService.Url;
+        }
+
         var response = await _httpClient.PutAsJsonAsync("courses",courceUpdateDto);
 
    

@@ -1,5 +1,5 @@
 using System;
-using UdemyClone.UI.Models.Catalog;
+using UdemyClone.UI.Models.Catalogs;
 
 
 namespace UdemyClone.UI.Models;

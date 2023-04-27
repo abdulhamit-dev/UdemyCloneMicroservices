@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Shared.Services;
-using UdemyClone.UI.Models.Catalog;
+using UdemyClone.UI.Models.Catalogs;
 using UdemyClone.UI.Services.Interfaces;
 
 namespace UdemyClone.UI.Controllers;
