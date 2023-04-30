@@ -27,4 +27,8 @@ public class CourseVM
 
     public CategoryVM Category { get; set; }
     public string StockPictureUrl { get; set; }
+    public string ShortDescription
+    {
+        get => Description.Length > 100 ? Description.Substring(0, 100) + "..." : Description;
+    }
 }
