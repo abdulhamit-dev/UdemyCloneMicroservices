@@ -16,7 +16,7 @@ namespace PhotoStockAPI.Controllers
     [ApiController]
     public class PhotosController : CustomBaseController
     {
-        [HttpPost("PhotoSave")]
+        [HttpPost]
         public async Task<IActionResult> PhotoSave(IFormFile photo, CancellationToken cancellationToken)
         {
             if (photo != null && photo.Length > 0)
@@ -36,8 +36,14 @@ namespace PhotoStockAPI.Controllers
             return CreateActionResultInstance(Response<PhotoDto>.Fail("photo is empty", 400));
         }
 
+        [HttpGet]
+        public IActionResult GetPhoto(){
 
-        [HttpDelete("PhotoDelete")]
+
+            return Ok("basarili");
+        }
+
+        [HttpDelete]
         public IActionResult PhotoDelete(string photoUrl)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photoUrl);

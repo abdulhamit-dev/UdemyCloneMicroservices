@@ -26,4 +26,5 @@ public class CourseVM
     public string CategoryId { get; set; }
 
     public CategoryVM Category { get; set; }
+    public string StockPictureUrl { get; set; }
 }

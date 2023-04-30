@@ -44,9 +44,10 @@ namespace CatalogAPI
                 options.RequireHttpsMetadata = false;
             });
 
+
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers();
+            
             services.AddControllers(opt =>
             {
                 opt.Filters.Add(new AuthorizeFilter());

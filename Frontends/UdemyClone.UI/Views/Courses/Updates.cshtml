@@ -9,7 +9,7 @@
             <div class="card-body">
                 <h5 class="card-title">Kurs güncelleme </h5>
 
-                <form asp-controller="Courses" asp-action="Update" method="post" enctype="multipart/form-data">
+                <form asp-controller="Courses" asp-action="Updates" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="UserId" />
@@ -46,12 +46,12 @@
                         <span class="text-danger" asp-validation-for="Feature.Duration"></span>
                     </div>
 
-                    @*<div class="mb-3">
+                    <div class="mb-3">
 
                         <label class="form-label" asp-for="PhotoFormFile"></label>
 
                         <input type="file" asp-for="PhotoFormFile" class="form-control" />
-                    </div>*@
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Kurs Güncelle</button>
                 </form>

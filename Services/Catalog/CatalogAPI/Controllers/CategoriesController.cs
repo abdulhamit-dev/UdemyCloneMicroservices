@@ -28,7 +28,8 @@ namespace CatalogAPI.Controllers
 
             return CreateActionResultInstance(categories);
         }
-
+        
+       
         //categories/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)

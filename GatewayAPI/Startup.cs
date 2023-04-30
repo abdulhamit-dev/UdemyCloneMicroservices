@@ -23,16 +23,12 @@ namespace GatewayAPI
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            var val= Configuration["IdentityServerURL"];
             services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
                 options.Audience = "resource_gateway";
                 options.RequireHttpsMetadata = false;
             });
-
-   
-
             services.AddOcelot();
         }
 

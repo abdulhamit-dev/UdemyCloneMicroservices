@@ -13,6 +13,7 @@ using UdemyClone.UI.Handler;
 using UdemyClone.UI.Models;
 using UdemyClone.UI.Services;
 using UdemyClone.UI.Services.Interfaces;
+using UdemyClone.UI.Helper;
 
 namespace UdemyClone.UI
 {
@@ -36,6 +37,7 @@ namespace UdemyClone.UI
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             services.AddScoped<ClientCredentialTokenHandler>();
+            services.AddSingleton<PhotoHelper>();
 
             services.AddHttpContextAccessor();
 

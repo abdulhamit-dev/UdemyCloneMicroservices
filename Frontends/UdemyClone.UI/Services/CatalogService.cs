@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using CatalogAPI.Services;
 using Shared.Dtos;
+using UdemyClone.UI.Helper;
 using UdemyClone.UI.Models;
 using UdemyClone.UI.Models.Catalogs;
 using UdemyClone.UI.Services.Interfaces;
@@ -15,12 +16,13 @@ public class CatalogService:ICatalogService
 {
     private readonly HttpClient _httpClient;
     private readonly IPhotoStockService _photoStockService;
-    //private readonly PhotoHelper _photoHelper;
+    private readonly PhotoHelper _photoHelper;
 
-    public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService)
+    public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper)
     {
         _httpClient = httpClient;
         _photoStockService = photoStockService;
+        _photoHelper=photoHelper;
     }
 
     public async Task<List<CourseVM>> GetAllCourseAsync()
@@ -32,6 +34,12 @@ public class CatalogService:ICatalogService
         }
 
         var responseSuccess= await response.Content.ReadFromJsonAsync<Response<List<CourseVM>>>();
+
+        responseSuccess.Data.ForEach(x =>
+            {
+                x.StockPictureUrl = _photoHelper.GetPhotoStockUrl(x.Picture);
+            });
+
         return responseSuccess.Data;
     }
 
@@ -58,6 +66,12 @@ public class CatalogService:ICatalogService
             return null;
         }
         var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseVM>>>();
+
+        responseSuccess.Data.ForEach(x =>
+            {
+                x.StockPictureUrl = _photoHelper.GetPhotoStockUrl(x.Picture);
+            });
+
         return responseSuccess.Data;
     }
 
@@ -72,6 +86,7 @@ public class CatalogService:ICatalogService
 
         var responseSuccess = await response.Content.ReadFromJsonAsync<Response<CourseVM>>();
 
+        responseSuccess.Data.StockPictureUrl = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.Picture);
 
         return responseSuccess.Data;
     }
