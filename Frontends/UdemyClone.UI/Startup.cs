@@ -14,6 +14,7 @@ using UdemyClone.UI.Models;
 using UdemyClone.UI.Services;
 using UdemyClone.UI.Services.Interfaces;
 using UdemyClone.UI.Helper;
+using UdemyClone.UI.Extensions;
 
 namespace UdemyClone.UI
 {
@@ -31,37 +32,18 @@ namespace UdemyClone.UI
         {
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
-
-            var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
-            
+                  
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             services.AddScoped<ClientCredentialTokenHandler>();
             services.AddSingleton<PhotoHelper>();
-
+            
             services.AddHttpContextAccessor();
 
             services.AddAccessTokenManagement();
 
-            services.AddHttpClient<IClientCredentialTokenService,ClientCredentialTokenService>();
+           services.AddHttpClientServices(Configuration);
 
-            services.AddHttpClient<ICatalogService, CatalogService>(opt =>
-            {
-                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
-            services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
-            {
-                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
-
-            services.AddHttpClient<IIdentityService, IdentityService>();
-
-            services.AddHttpClient<IUserService, UserService>(opt =>
-            {
-                opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
             
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>

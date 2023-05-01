@@ -35,14 +35,14 @@ namespace BasketAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.Authority = Configuration["IdentityServerUrl"];
-                options.Audience = "resource_basket";
-                options.RequireHttpsMetadata = false;
-            });
+            // var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            // JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            // {
+            //     options.Authority = Configuration["IdentityServerUrl"];
+            //     options.Audience = "resource_basket";
+            //     options.RequireHttpsMetadata = false;
+            // });
 
             services.AddHttpContextAccessor();
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
@@ -60,10 +60,11 @@ namespace BasketAPI
                 return redis;
             });
 
-            services.AddControllers(opt =>
-            {
-                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
-            });
+            // services.AddControllers(opt =>
+            // {
+            //     opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
+            // });
+            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {

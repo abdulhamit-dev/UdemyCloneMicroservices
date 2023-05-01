@@ -24,13 +24,13 @@ namespace BasketAPI.Controllers
             _sharedIdentityService = sharedIdentityService;
         }
 
-        [HttpGet("GetBasket")]
+        [HttpGet]
         public async Task<IActionResult> GetBasket()
         {
             return CreateActionResultInstance(await _basketService.GetBasket(_sharedIdentityService.GetUserId));
         }
 
-        [HttpPost("SaveOrUpdateBasket")]
+        [HttpPost]
         public async Task<IActionResult> SaveOrUpdateBasket(BasketDto basketDto)
         {
             basketDto.UserId = _sharedIdentityService.GetUserId;
@@ -39,7 +39,7 @@ namespace BasketAPI.Controllers
             return CreateActionResultInstance(response);
         }
 
-        [HttpDelete("DeleteBasket")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteBasket()
 
         {
