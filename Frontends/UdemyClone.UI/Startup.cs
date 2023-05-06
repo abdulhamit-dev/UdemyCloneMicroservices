@@ -32,20 +32,20 @@ namespace UdemyClone.UI
         {
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
-                  
+
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             services.AddScoped<ClientCredentialTokenHandler>();
             services.AddSingleton<PhotoHelper>();
-            
+
             services.AddHttpContextAccessor();
 
             services.AddAccessTokenManagement();
 
-           services.AddHttpClientServices(Configuration);
+            services.AddHttpClientServices(Configuration);
 
 
-            
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
             {
                 opts.LoginPath = "/Auth/SignIn";

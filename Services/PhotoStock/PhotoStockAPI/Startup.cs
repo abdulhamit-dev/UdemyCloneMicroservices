@@ -5,10 +5,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Text;
 
 namespace PhotoStockAPI
 {
@@ -24,7 +21,7 @@ namespace PhotoStockAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var test = Configuration["IdentityServerUrl"];
+            // var test = Configuration["IdentityServerUrl"];
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = Configuration["IdentityServerUrl"];
@@ -35,7 +32,7 @@ namespace PhotoStockAPI
             services.AddControllers(opt =>
             {
                 opt.Filters.Add(new AuthorizeFilter());
-            });
+            }); 
             
             services.AddSwaggerGen(c =>
             {
