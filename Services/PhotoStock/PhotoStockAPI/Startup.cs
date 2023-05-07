@@ -29,6 +29,8 @@ namespace PhotoStockAPI
                 options.RequireHttpsMetadata = false;
             });
 
+            services.AddHttpContextAccessor();
+            
             services.AddControllers(opt =>
             {
                 opt.Filters.Add(new AuthorizeFilter());
