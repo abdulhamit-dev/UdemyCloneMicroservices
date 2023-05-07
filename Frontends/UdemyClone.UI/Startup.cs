@@ -15,6 +15,8 @@ using UdemyClone.UI.Services;
 using UdemyClone.UI.Services.Interfaces;
 using UdemyClone.UI.Helper;
 using UdemyClone.UI.Extensions;
+using FluentValidation.AspNetCore;
+using UdemyClone.UI.Validators;
 
 namespace UdemyClone.UI
 {
@@ -55,6 +57,9 @@ namespace UdemyClone.UI
             });
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddFluentValidationAutoValidation();
+            // services.AddControllersWithViews()
+            //     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CourseCreateDtoValidator>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +76,8 @@ namespace UdemyClone.UI
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            
 
             app.UseAuthentication();
             app.UseAuthorization();
