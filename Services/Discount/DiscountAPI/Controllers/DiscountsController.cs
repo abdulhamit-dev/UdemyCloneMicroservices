@@ -24,13 +24,13 @@ namespace DiscountAPI.Controllers
             _sharedIdentityService = sharedIdentityService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return CreateActionResultInstance(await _discountService.GetAll());
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var discount = await _discountService.GetById(id);
@@ -38,7 +38,8 @@ namespace DiscountAPI.Controllers
             return CreateActionResultInstance(discount);
         }
 
-        [HttpGet("GetByCode")]
+        [HttpGet]
+        [Route("/api/[controller]/[action]/{code}")]
         public async Task<IActionResult> GetByCode(string code)
 
         {
@@ -49,19 +50,19 @@ namespace DiscountAPI.Controllers
             return CreateActionResultInstance(discount);
         }
 
-        [HttpPost("Save")]
+        [HttpPost]
         public async Task<IActionResult> Save(Models.Discount discount)
         {
             return CreateActionResultInstance(await _discountService.Save(discount));
         }
 
-        [HttpPut("Update")]
+        [HttpPut]
         public async Task<IActionResult> Update(Models.Discount discount)
         {
             return CreateActionResultInstance(await _discountService.Update(discount));
         }
 
-        [HttpDelete("Delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             return CreateActionResultInstance(await _discountService.Delete(id));

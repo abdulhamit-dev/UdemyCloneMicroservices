@@ -1,6 +1,8 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UdemyClone.UI.Models.Baskets;
+using UdemyClone.UI.Models.Discounts;
 using UdemyClone.UI.Services.Interfaces;
 
 namespace UdemyClone.UI.Controllers;
@@ -37,6 +39,24 @@ public class BasketController : Controller
     {
         var result = await _basketService.RemoveBasketItem(courseId);
 
+        return RedirectToAction(nameof(Index));
+    }
+    public async Task<IActionResult> ApplyDiscount(DiscountApplyDto discountApplyInput)
+    {
+        if (!ModelState.IsValid)
+        {
+            TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).First();
+            return RedirectToAction(nameof(Index));
+        }
+        var discountStatus = await _basketService.ApplyDiscount(discountApplyInput.Code);
+
+        TempData["discountStatus"] = discountStatus;
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> CancelApplyDiscount()
+    {
+        await _basketService.CancelApplyDiscount();
         return RedirectToAction(nameof(Index));
     }
 }
