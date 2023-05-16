@@ -66,6 +66,7 @@ namespace IdentityServer
                         "basket_fullpermission",
                         "order_fullpermission",
                         "gateway_fullpermission",
+                        "payment_fullpermission",
                         "discount_fullpermission",
                         IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.OpenId,
