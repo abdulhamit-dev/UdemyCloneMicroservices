@@ -30,35 +30,33 @@ public class OrderController : Controller
     public async Task<IActionResult> Checkout(CheckoutInfoDto checkoutInfoDto)
     {
         //1. yol senkron iletişim
-        var orderStatus = await _orderService.CreateOrder(checkoutInfoDto);
-        if (!orderStatus.IsSuccessful)
-        {
-            var basket = await _basketService.Get();
-            ViewBag.basket = basket;
-            ViewBag.error = orderStatus.Error;
-            return View();
-        }
-        
-        // 2.yol asenkron iletişim
-        // var orderSuspend = await _orderService.SuspendOrder(checkoutInfoDto);
-        // if (!orderSuspend.IsSuccessful)
+        // var orderStatus = await _orderService.CreateOrder(checkoutInfoDto);
+        // if (!orderStatus.IsSuccessful)
         // {
         //     var basket = await _basketService.Get();
-
         //     ViewBag.basket = basket;
-
-        //     ViewBag.error = orderSuspend.Error;
-
+        //     ViewBag.error = orderStatus.Error;
         //     return View();
         // }
+        
+        // 2.yol asenkron iletişim
+        var orderSuspend = await _orderService.SuspendOrder(checkoutInfoDto);
+        if (!orderSuspend.IsSuccessful)
+        {
+            var basket = await _basketService.Get();
+
+            ViewBag.basket = basket;
+
+            ViewBag.error = orderSuspend.Error;
+
+            return View();
+        }
+
         //1. yol senkron iletişim
-         return RedirectToAction(nameof(SuccessfulCheckout), new { orderId = orderStatus.OrderId });
+        //  return RedirectToAction(nameof(SuccessfulCheckout), new { orderId = orderStatus.OrderId });
 
         //2.yol asenkron iletişim
-        // return RedirectToAction(nameof(SuccessfulCheckout), new { orderId = new Random().Next(1, 1000) });
-
-
-
+        return RedirectToAction(nameof(SuccessfulCheckout), new { orderId = new Random().Next(1, 1000) });
     }
 
     public IActionResult SuccessfulCheckout(int orderId)
@@ -71,4 +69,5 @@ public class OrderController : Controller
     {
         return View(await _orderService.GetOrder());
     }
+    
 }
